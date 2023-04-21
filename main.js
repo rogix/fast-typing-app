@@ -43,7 +43,8 @@ class TypingApp {
   updateWPM() {
     const currentTime = Date.now();
     const elapsedTime = (currentTime - this.startTime) / 1000 / 60; // in minutes
-    const wpm = Math.floor(this.currentWordIndex / elapsedTime);
+    const numberOfWords = (this.currentWordIndex + 1) / 2; // Count only actual words
+    const wpm = Math.floor(numberOfWords / elapsedTime);
     this.wpmDisplay.textContent = wpm;
   }
 
@@ -64,7 +65,6 @@ class TypingApp {
         : null;
 
     if (currentWord === " " && input === " ") {
-      // Add this block to handle space between words
       this.wordsDisplay
         .querySelectorAll(".word")
         [this.currentWordIndex].classList.add("correct");
@@ -97,7 +97,8 @@ class TypingApp {
     ) {
       this.currentWordIndex++;
 
-      if (this.currentWordIndex === this.blockSize) {
+      if (this.currentWordIndex === this.blockSize * 2 - 1) {
+        // Update this line
         this.updateWPM();
         this.currentWordIndex = 0;
         setTimeout(() => {
