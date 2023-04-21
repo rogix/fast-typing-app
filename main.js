@@ -12,6 +12,10 @@ class TypingApp {
 
     document.addEventListener("keydown", (e) => this.checkLetter(e));
     this.pickRandomWords();
+    const firstWordElement = this.wordsDisplay.querySelectorAll(".word")[0];
+    if (firstWordElement) {
+      firstWordElement.querySelector("span").classList.add("cursor");
+    }
   }
 
   pickRandomWords() {
@@ -51,6 +55,14 @@ class TypingApp {
   checkLetter(e) {
     const input = e.key === " " ? " " : e.key;
     const currentWord = this.currentWords[this.currentWordIndex];
+    const nextCurrentLetterIndexElement = this.wordsDisplay
+      .querySelectorAll(".word")
+      [this.currentWordIndex].querySelectorAll(
+        "span:not(.correct):not(.incorrect)"
+      )[0];
+    if (nextCurrentLetterIndexElement) {
+      nextCurrentLetterIndexElement.classList.add("cursor");
+    }
     const currentLetterIndex =
       this.wordsDisplay
         .querySelectorAll(".word")
